@@ -209,6 +209,7 @@ var target_emoji = 0;
 var score = 0;
 var total = 0;
 var gameRunning = false;
+var tada = document.getElementById("tada");
 
 // NOTE:
 // - Remember to call your update function from the "onImageResultsSuccess" event handler above
@@ -251,6 +252,7 @@ function checkEmojiGame(face){
     var guess = toUnicode(face.emojis.dominantEmoji);
     if(guess == target_emoji){
       score = score + 1;
+      tada.play(); 
       setScore(score, total);
       setNewTargetEmoji();
     }
