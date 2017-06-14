@@ -169,12 +169,14 @@ function drawEmoji(canvas, img, face) {
   var ctx = canvas.getContext('2d');
 
   // TODO: Set the font and style you want for the emoji
-  ctx.font = '124px serif';
+  var [max_x, min_x, max_y, min_y] = getBoundingBox(face.featurePoints);
+  var diff = Math.ceil((max_x - min_x)/2);
+  ctx.font = diff.toString() + 'px serif'
 
   // TODO: Draw it using ctx.strokeText() or fillText()
   // See: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText
   // TIP: Pick a particular feature point as an anchor so that the emoji sticks to your face
-  var [max_x, min_x, max_y, min_y] = getBoundingBox(face.featurePoints);
+
   ctx.fillText(face.emojis.dominantEmoji, max_x, min_y);
 }
 
@@ -252,7 +254,7 @@ function checkEmojiGame(face){
     var guess = toUnicode(face.emojis.dominantEmoji);
     if(guess == target_emoji){
       score = score + 1;
-      tada.play(); 
+      tada.play();
       setScore(score, total);
       setNewTargetEmoji();
     }
