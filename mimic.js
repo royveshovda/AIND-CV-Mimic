@@ -208,6 +208,7 @@ function getBoundingBox(featurePoints){
 var target_emoji = 0;
 var score = 0;
 var total = 0;
+var gameRunning = false;
 
 // NOTE:
 // - Remember to call your update function from the "onImageResultsSuccess" event handler above
@@ -240,15 +241,19 @@ function startGame(){
   score = 0;
   total = 0;
   setNewTargetEmoji();
+  gameRunning = true;
 }
 
 function checkEmojiGame(face){
-  var guess = toUnicode(face.emojis.dominantEmoji);
-  if(guess == target_emoji){
-    score = score + 1;
-    setScore(score, total);
-    setNewTargetEmoji();
+  if(!gameRunning){
+    startGame();
+  }else{
+    var guess = toUnicode(face.emojis.dominantEmoji);
+    if(guess == target_emoji){
+      score = score + 1;
+      setScore(score, total);
+      setNewTargetEmoji();
+    }
   }
-}
 
-startGame();
+}
