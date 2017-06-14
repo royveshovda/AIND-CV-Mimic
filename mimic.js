@@ -74,7 +74,7 @@ function onReset() {
   $("#logs").html("");  // clear out previous log
 
   // TODO(optional): You can restart the game as well
-  // <your code here>
+  startGame();
 };
 
 // Add a callback to notify when camera access is allowed
@@ -203,7 +203,9 @@ function getBoundingBox(featurePoints){
   return [max_x, min_x, max_y, min_y];
 }
 
+
 // TODO: Define any variables and functions to implement the Mimic Me! game mechanics
+var target_emoji = 0;
 
 // NOTE:
 // - Remember to call your update function from the "onImageResultsSuccess" event handler above
@@ -217,3 +219,19 @@ function getBoundingBox(featurePoints){
 // - Define a game reset function (same as init?), and call it from the onReset() function above
 
 // <your code here>
+// Return a random int including min and max [min, max]
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * ((max + 1) - min)) + min;
+}
+
+function startGame(){
+  setScore(0,0);
+  var id = getRandomInt(0,12);
+  target_emoji = emojis[id];
+  console.log(target_emoji);
+  setTargetEmoji(target_emoji);
+}
+
+startGame();
