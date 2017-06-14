@@ -176,7 +176,6 @@ function drawEmoji(canvas, img, face) {
   // TODO: Draw it using ctx.strokeText() or fillText()
   // See: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText
   // TIP: Pick a particular feature point as an anchor so that the emoji sticks to your face
-
   ctx.fillText(face.emojis.dominantEmoji, max_x, min_y);
 }
 
@@ -259,5 +258,4 @@ function checkEmojiGame(face){
       setNewTargetEmoji();
     }
   }
-
 }
