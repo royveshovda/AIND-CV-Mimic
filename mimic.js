@@ -62,6 +62,7 @@ function onStop() {
     detector.removeEventListener();
     detector.stop();  // stop detector
   }
+  stopGame();
 };
 
 // Reset button
@@ -102,7 +103,8 @@ detector.addEventListener("onInitializeSuccess", function() {
   $("#face_video").css("display", "none");
 
   // TODO(optional): Call a function to initialize the game, if needed
-  // <your code here>
+  console.log("ready to go");
+  startGame();
 });
 
 // Add a callback to receive the results from processing an image
@@ -209,8 +211,10 @@ function getBoundingBox(featurePoints){
 var target_emoji = 0;
 var score = 0;
 var total = 0;
-var gameRunning = false;
+var countdown = 0;
 var tada = document.getElementById("tada");
+
+var timer = null;
 
 // NOTE:
 // - Remember to call your update function from the "onImageResultsSuccess" event handler above
@@ -239,23 +243,66 @@ function setNewTargetEmoji(){
   setScore(score, total);
 }
 
+function stopGame(){
+  countdown = 0;
+  setLeft(-1);
+  if(timer){
+    clearInterval(timer);
+  }
+}
+
 function startGame(){
+  stopGame();
+
   score = 0;
   total = 0;
   setNewTargetEmoji();
-  gameRunning = true;
+
+  countdown = 10;
+
+  setLeft(countdown);
+  timer = setInterval(tick, 1000);
 }
 
 function checkEmojiGame(face){
-  if(!gameRunning){
-    startGame();
+  var guess = toUnicode(face.emojis.dominantEmoji);
+  if(guess == target_emoji){
+    score = score + 1;
+    tada.play();
+    setScore(score, total);
+    resetCounter();
+    setNewTargetEmoji();
+  }
+}
+
+function resetCounter(){
+  if(timer){
+    clearInterval(timer);
+  }
+
+  countdown = 10;
+
+  setLeft(countdown);
+  timer = setInterval(tick, 1000);
+}
+
+function tick() {
+  countdown = countdown - 1;
+  if(countdown == 0){
+    countdown = 10;
+    setNewTargetEmoji();
+  }
+  setLeft(countdown);
+}
+
+function setLeft(left) {
+  var bar = document.getElementById("myBar");
+  if(left == -1){
+    $("#countdown").html("Left: ?");
+    bar.style.width = '0%';
   }else{
-    var guess = toUnicode(face.emojis.dominantEmoji);
-    if(guess == target_emoji){
-      score = score + 1;
-      tada.play();
-      setScore(score, total);
-      setNewTargetEmoji();
-    }
+    $("#countdown").html("Left: " + left);
+    width = countdown * 10;
+    bar.style.width = width + '%';
   }
 }
