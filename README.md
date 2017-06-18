@@ -69,4 +69,21 @@ function drawEmoji(canvas, img, face) {
 #### Assignment
 Now it's your turn to implement the game mechanics and make it as fun as possible! Scroll down to the bottom of mimic.js for more instructions. Feel free to modify the HTML and/or CSS files to change the look and feel of the game as well.
 #### Description
-TODO
+The implementation of the game part is a bit more involved the the previous two sections. In short the game goes like this:
+* Press start to begin (make sure to allow web camera to show image)
+* A random emoji will be show. You have 10 seconds to mimic the same facial expression
+* If 10 seconds passes without you being able to mimic, the score is 0 and a new random emoji gets selected. You start over with 10 new seconds.
+* If you manage to mimic the same expression, a salute is played for you (if you have enabled sound), you get 1 point, and a new emoji gets picked at random with 10 new seconds to mimic.
+* The game can be stopped or reset at any time.
+
+The main part comparing the mimiced expression and the random selected emoji looks like this:
+```function checkEmojiGame(face){
+  var guess = toUnicode(face.emojis.dominantEmoji);
+  if(guess == target_emoji){
+    score = score + 1;
+    tada.play();
+    setScore(score, total);
+    resetCounter();
+    setNewTargetEmoji();
+  }
+}```
