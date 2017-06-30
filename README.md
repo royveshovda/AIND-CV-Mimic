@@ -38,7 +38,8 @@ function drawFeaturePoints(canvas, img, face) {
     ctx.arc(featurePoint.x, featurePoint.y, 2, 0, 2 * Math.PI);
     ctx.stroke();
   }
-}```
+}
+```
 
 ### 2. Show Dominant Emoji
 #### Assignment
@@ -62,7 +63,8 @@ function drawEmoji(canvas, img, face) {
   var diff = Math.ceil((max_x - min_x)/2);
   ctx.font = diff.toString() + 'px serif'
   ctx.fillText(face.emojis.dominantEmoji, max_x, min_y);
-}```
+}
+```
 
 
 ### 3. Implement Mimic Me!
@@ -86,4 +88,5 @@ The main part comparing the mimiced expression and the random selected emoji loo
     resetCounter();
     setNewTargetEmoji();
   }
-}```
+}
+```
